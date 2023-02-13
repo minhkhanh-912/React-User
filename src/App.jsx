@@ -1,32 +1,25 @@
 import { useState } from "react";
-import reactLogo from "./assets/react.svg";
+import { Button, Container } from "react-bootstrap";
 import "./App.scss";
+import Header from "./components/Header";
+import TableUser from "./components/TableUser";
 
 function App() {
-  const [count, setCount] = useState(0);
+  let nums = [2, 7, 9, 3, 1];
+  const dp = Array(nums.length).fill(0);
+  dp[0] = nums[0];
+  dp[1] = Math.max(nums[0], nums[1]);
 
+  for (let i = 2; i < nums.length; i++) {
+    dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i]);
+  }
+  console.log(dp[nums.length - 1]);
   return (
     <div className="App">
-      <div>
-        <a href="https://vitejs.dev" target="_blank">
-          <img src="/vite.svg" className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://reactjs.org" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
+      <Header></Header>
+      <Container>
+        <TableUser></TableUser>
+      </Container>
     </div>
   );
 }
